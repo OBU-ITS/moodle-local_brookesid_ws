@@ -24,8 +24,8 @@
  */
 
 $plugin->component = 'local_brookesid_ws'; // Full name of the plugin (used for diagnostics): plugintype_pluginname
-$plugin->version  = 2017022200;   // The (date) version of this module + 2 extra digital for daily versions
+$plugin->version  = 2017022300;   // The (date) version of this module + 2 extra digital for daily versions
 $plugin->requires = 2012120300;   // Requires this Moodle version - at least 2.0
 $plugin->cron     = 0;
-$plugin->release = 'v1.1.0';
+$plugin->release = 'v1.1.1';
 $plugin->maturity = MATURITY_STABLE;
