@@ -110,7 +110,7 @@ class local_brookesid_ws_external extends external_api {
 	
 
 		/*****
-		 *  BADGES 
+		 *  BADGES ISSUED
 		 *  Moodle badges
 		 *****/
 	
@@ -317,6 +317,69 @@ class local_brookesid_ws_external extends external_api {
 		);
 	}
 	
+			/* ALL COURSES */
+	public static function get_all_courses_parameters() {
+		/* all badges in the scheme */
+		return new external_function_parameters(array());
+	}
+		
+	public static function get_all_courses() {
+		global $USER, $DB;
+
+		// Context validation
+		$context = context_system::instance();
+		self::validate_context($context);
+
+        // Capability checking
+//		require_capability('moodle/badge:view', $context);
+
+		/* select all badges  */
+		$sql = 'SELECT c.id, c.fullname, c.shortname, c.summary, c.idnumber  '
+			. 'FROM {course} c '
+			. 'WHERE c.idnumber LIKE "CCA~%"';
+		$all_course_records = $DB->get_records_sql($sql);
+
+		$all_courses = array();
+		foreach ($all_course_records as $c) {
+			$pos = strpos($c->idnumber, '~'); // We know there's at least one
+			$code = substr($c->idnumber, ($pos + 1));
+			$pos = strpos($code, '~');
+			if ($pos === false) {
+				$all_course_type = '';
+				$all_course_category = '';
+			} else {
+				$all_course_type = substr($code, 0, $pos);
+				$all_course_category = substr($code, ($pos + 1), ($pos + 1));
+			}
+			$all_courses[] = array(
+				'all_course_id' => $c->id,
+				'all_course_name' => $c->fullname,
+				'all_course_shortname' => $c->shortname,
+				'all_course_type' => $all_course_type,
+				'all_course_category' => $all_course_category,
+				'all_course_description' => $c->summary
+			);
+		}
+		
+		return $all_courses;
+	}
+	
+	public static function get_all_courses_returns() {
+		/*list of all Moodle courses (activities) in the scheme */
+		return new external_multiple_structure(
+			new external_single_structure(
+				array (
+					'all_course_id' => new external_value(PARAM_INT, 'course ID'),
+					'all_course_name' => new external_value(PARAM_TEXT, 'course name'),
+					'all_course_shortname' => new external_value(PARAM_TEXT, 'course short name'),
+					'all_course_type' => new external_value(PARAM_TEXT, 'course type'),
+					'all_course_category' => new external_value(PARAM_TEXT, 'course category'),
+					'all_course_description' => new external_value(PARAM_RAW, 'course description')
+				)
+			)
+		);
+	}
+	
 		/* YOUR ACTIVITIES */
 	public static function get_activities_parameters() {
 		/* badge activities that the student is signed up for */
@@ -341,8 +404,8 @@ class local_brookesid_ws_external extends external_api {
 				LEFT JOIN {badge} b ON b.courseid = ac.id 
 				LEFT JOIN {badge_issued} bi ON bi.badgeid = b.id
 				WHERE ac.idnumber LIKE "CCA~%"
-				AND ue.userid = ?  
-				AND (bi.userid IS NULL OR bi.userid <> ue.userid)';
+				AND  ue.userid = ?  
+				AND bi.userid != ? ';
 			
 		$activities_records = $DB->get_records_sql($sql, array($USER->id, $USER->id));
 

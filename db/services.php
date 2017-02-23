@@ -59,6 +59,15 @@ $functions = array(
 		'type'        => 'read',
 		'capabilities'=> ''
 	),
+	// all courses
+	'local_brookesid_ws_get_all_courses' => array(
+		'classname'   => 'local_brookesid_ws_external',
+		'methodname'  => 'get_all_courses',
+		'classpath'   => 'local/brookesid_ws/externallib.php',
+		'description' => 'Returns all courses in the scheme.',
+		'type'        => 'read',
+		'capabilities'=> ''
+	),
 	// your activities
 	'local_brookesid_ws_get_activities' => array(
 		'classname'   => 'local_brookesid_ws_external',
@@ -137,6 +146,8 @@ $services = array(
 	        'local_brookesid_ws_get_nextbadges',
 	        // all badges
 	        'local_brookesid_ws_get_all_badges',
+	        // all courses
+	        'local_brookesid_ws_get_all_courses',
 	        // activities
 	        'local_brookesid_ws_get_activities',
 	        //get privacy settings
