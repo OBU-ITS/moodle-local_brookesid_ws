@@ -197,7 +197,7 @@ class local_brookesid_ws_external extends external_api {
 		 * (don't need to explicitly exclude those they've been awarded 
 		 * because you have to sign up for something in order to be awarded it) 
 		 ***/
-		$sql = 'SELECT nb.id AS badgeid, nb.name, nb.description, c.idnumber, c.id AS courseid
+		$sql = 'SELECT nb.id AS badgeid, nb.name, nb.description, c.idnumber, c.id AS courseid, c.shortname AS coursename, c.summary AS coursedescription
 				FROM {badge} nb
 				JOIN {course} c ON c.id = nb.courseid
 				WHERE c.idnumber LIKE "CCA~%"
@@ -230,7 +230,9 @@ class local_brookesid_ws_external extends external_api {
 					'next_badge_category' => $next_badge_category,
 					'next_badge_description' => $nb->description,
 					'coursecode' => $nb->idnumber,
-					'courseid' => $nb->courseid
+					'courseid' => $nb->courseid,
+					'coursename' => $nb->coursename,
+					'coursedescription' => $nb->coursedescription
 				);
 			}
 		}
@@ -249,7 +251,9 @@ class local_brookesid_ws_external extends external_api {
 					'next_badge_category' => new external_value(PARAM_TEXT, 'Next Badge category'),
 					'next_badge_description' => new external_value(PARAM_TEXT, 'Next Badge description'),
 					'coursecode' => new external_value(PARAM_TEXT, 'course code'),
-					'courseid' => new external_value(PARAM_INT, 'Course ID')
+					'courseid' => new external_value(PARAM_INT, 'Course ID'),
+					'coursename' => new external_value(PARAM_TEXT, 'course name'),
+					'coursedescription' => new external_value(PARAM_RAW, 'course description')
 				)
 			)
 		);
@@ -404,8 +408,8 @@ class local_brookesid_ws_external extends external_api {
 				LEFT JOIN {badge} b ON b.courseid = ac.id 
 				LEFT JOIN {badge_issued} bi ON bi.badgeid = b.id
 				WHERE ac.idnumber LIKE "CCA~%"
-				AND ue.userid = ?  
-				AND (bi.userid IS NULL OR bi.userid <> ue.userid)';
+				AND  ue.userid = ?  
+				AND bi.userid != ? ';
 			
 		$activities_records = $DB->get_records_sql($sql, array($USER->id, $USER->id));
 
