@@ -408,8 +408,8 @@ class local_brookesid_ws_external extends external_api {
 				LEFT JOIN {badge} b ON b.courseid = ac.id 
 				LEFT JOIN {badge_issued} bi ON bi.badgeid = b.id
 				WHERE ac.idnumber LIKE "CCA~%"
-				AND  ue.userid = ?  
-				AND bi.userid != ? ';
+				AND ue.userid = ?  
+				AND (bi.userid IS NULL OR bi.userid <> ue.userid)';
 			
 		$activities_records = $DB->get_records_sql($sql, array($USER->id, $USER->id));
 
