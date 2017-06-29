@@ -276,7 +276,7 @@ class local_brookesid_ws_external extends external_api {
 //		require_capability('moodle/badge:view', $context);
 
 		/* select all badges  */
-		$sql = 'SELECT ab.id, ab.name, ab.description, c.idnumber  '
+		$sql = 'SELECT ab.id, ab.name, ab.description, c.idnumber, c.shortname AS coursename, c.summary AS coursedescription '
 			. 'FROM {badge} ab '
 			. 'JOIN {course} c ON c.id = ab.courseid '
 			. 'WHERE c.idnumber LIKE "CCA~%"';
@@ -299,7 +299,9 @@ class local_brookesid_ws_external extends external_api {
 				'all_badge_name' => $ab->name,
 				'all_badge_type' => $all_badge_type,
 				'all_badge_category' => $all_badge_category,
-				'all_badge_description' => $ab->description
+				'all_badge_description' => $ab->description,
+				'coursename' => new external_value(PARAM_TEXT, 'course name'),
+				'coursedescription' => new external_value(PARAM_RAW, 'course description')
 			);
 		}
 		
@@ -315,7 +317,9 @@ class local_brookesid_ws_external extends external_api {
 					'all_badge_name' => new external_value(PARAM_TEXT, 'Badge name'),
 					'all_badge_type' => new external_value(PARAM_TEXT, 'Badge type'),
 					'all_badge_category' => new external_value(PARAM_TEXT, 'Badge category'),
-					'all_badge_description' => new external_value(PARAM_TEXT, 'Badge description')
+					'all_badge_description' => new external_value(PARAM_TEXT, 'Badge description'),
+					'coursename' => new external_value(PARAM_TEXT, 'course name'),
+					'coursedescription' => new external_value(PARAM_RAW, 'course description')
 				)
 			)
 		);
