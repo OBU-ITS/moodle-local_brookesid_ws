@@ -211,6 +211,11 @@ class local_brookesid_ws_external extends external_api {
 		/* User's course categories mapped to faculty abbreviations*/
 		$faculties = self::get_faculties(); 
 		$next_badges = array();
+		if(substr( $USER->username, 0, 1 ) === "p") {
+			$is_staff = 1;
+		} else {
+			$is_staff = 0;
+		}
 		foreach ($next_badge_records as $nb) {
 			$pos = strpos($nb->idnumber, '~'); // We know there's at least one
 			$code = substr($nb->idnumber, ($pos + 1));
@@ -222,7 +227,7 @@ class local_brookesid_ws_external extends external_api {
 				$next_badge_type = substr($code, 0, $pos);
 				$next_badge_category = substr($code, ($pos + 1), ($pos + 1));
 			}
-			if (in_array($next_badge_type, $faculties)) {
+			if (in_array($next_badge_type, $faculties) || $is_staff == 1) {
 				$next_badges[] = array(
 					'next_badge_id' => $nb->badgeid,
 					'next_badge_name' => $nb->name,
