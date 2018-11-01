@@ -489,8 +489,7 @@ class local_brookesid_ws_external extends external_api {
 
  	/* EXPORT */
 	public static function get_export_parameters() {
-
-		return TRUE;
+		return new external_function_parameters(array());
 	}		
 	
  	public static function get_export() {
