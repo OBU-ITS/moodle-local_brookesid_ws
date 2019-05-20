@@ -1,5 +1,7 @@
 <?php
 
+// This file is part of Moodle - http://moodle.org/
+//
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -14,15 +16,28 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Brookes ID web service - language strings
+ * Brookes ID web service - Privacy Subsystem implementation
  *
  * @package    local_brookesid_ws
  * @author     Peter Welham / Yvonne Aburrow
- * @copyright  2016, Oxford Brookes University
+ * @copyright  2019, Oxford Brookes University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- *
  */
 
-$string['privacy:metadata'] = 'The Brookes ID web service plugin is an interface to Moodle courses and badges and does not itself store any personal data.';
+namespace local_empskill_ws\privacy;
 
-$string['pluginname'] = 'Brookes ID web service';
+defined('MOODLE_INTERNAL') || die();
+
+// Privacy Subsystem implementing null_provider
+class provider implements \core_privacy\local\metadata\null_provider {
+
+	/**
+	* Get the language string identifier with the component's language
+	* file to explain why this plugin stores no data.
+	*
+	* @return  string
+	*/
+	public static function get_reason() : string {
+		return 'privacy:metadata';
+	}
+}

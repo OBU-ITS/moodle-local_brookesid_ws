@@ -18,14 +18,14 @@
  *
  * @package    local_brookesid_ws
  * @author     Peter Welham / Yvonne Aburrow
- * @copyright  2016, Oxford Brookes University
+ * @copyright  2019, Oxford Brookes University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  *
  */
 
 $plugin->component = 'local_brookesid_ws'; // Full name of the plugin (used for diagnostics): plugintype_pluginname
-$plugin->version  = 2018101500;   // The (date) version of this module + 2 extra digital for daily versions
+$plugin->version  = 2019052000;   // The (date) version of this module + 2 extra digital for daily versions
 $plugin->requires = 2012120300;   // Requires this Moodle version - at least 2.0
 $plugin->cron     = 0;
-$plugin->release = 'v1.1.5';
+$plugin->release = 'v1.1.6';
 $plugin->maturity = MATURITY_STABLE;
