@@ -736,7 +736,7 @@ class local_brookesid_ws_external extends external_api {
 			. ' JOIN {role_assignments} ra ON ra.contextid = ct.id'
 			. ' JOIN {course} c ON c.id = e.courseid'
 			. ' WHERE ue.userid = ?'
-				. ' AND (e.enrol = "database" OR e.enrol = "databaseextended" OR e.enrol = "lmb")'
+				. ' AND (e.enrol = "database" OR e.enrol = "databaseextended" OR e.enrol = "ethos" OR e.enrol = "lmb")'
 				. ' AND ct.contextlevel = 50'
 				. ' AND ra.userid = ue.userid'
 				. ' AND ra.roleid = ?'
