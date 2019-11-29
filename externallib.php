@@ -201,12 +201,14 @@ class local_brookesid_ws_external extends external_api {
 				FROM {badge} nb
 				JOIN {course} c ON c.id = nb.courseid
 				WHERE c.idnumber LIKE "CCA~%"
+				AND c.visible = "1"
 				AND nb.courseid NOT IN (SELECT c.id
 						FROM {course} c 
 						JOIN {enrol} en ON en.courseid = c.id 
 						JOIN {user_enrolments} ue ON ue.enrolid = en.id 
 						WHERE ue.userid = ?
-						AND c.idnumber LIKE "CCA~%")' ;
+						AND c.idnumber LIKE "CCA~%"
+						AND c.visible = "1")' ;
 		$next_badge_records = $DB->get_records_sql($sql, array($USER->id));
 		/* User's course categories mapped to faculty abbreviations*/
 		$faculties = self::get_faculties(); 

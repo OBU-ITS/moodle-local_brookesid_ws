@@ -18,7 +18,7 @@
  *
  * @package    local_brookesid_ws
  * @author     Peter Welham / Yvonne Aburrow
- * @copyright  2016, Oxford Brookes University
+ * @copyright  2019, Oxford Brookes University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  *
  */
